@@ -1,39 +1,96 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+/*
+=========================================================================================
+NEWSROOM DESIGN SYSTEM - PIXEL-PERFECT REPLICATION
+=========================================================================================
+Based on design reference: ai-generated-preview.png
+
+COLOR PALETTE (EXACT):
+- Primary Blue: #007BFF (hsl(211, 100%, 50%)) - buttons, links, active states
+- Background White: #FFFFFF (hsl(0, 0%, 100%))
+- Light Gray Background: #F8F9FA (hsl(210, 17%, 98%))
+- Border Gray: #E0E0E0 (hsl(0, 0%, 88%))
+- Text Dark: #212529 (hsl(210, 11%, 15%))
+- Text Medium: #6C757D (hsl(210, 9%, 46%))
+- Red Indicator: #DC3545 (hsl(354, 70%, 54%))
+
+TYPOGRAPHY:
+- Primary Font: Inter (sans-serif) - modern, clean, readable
+- Logo: Bold, uppercase, 18px
+- Headlines: Bold, 16-18px
+- Body: Regular, 14px
+- Metadata: Small, 12px
+
+SPACING SYSTEM:
+- Base unit: 8px
+- Container max-width: 1200px
+- Card gaps: 16px
+- Section spacing: 24px
+
+COMPONENT SPECIFICATIONS:
+- Border Radius: 8px (cards, buttons), 20px (search bar)
+- Card Shadow: 0 2px 8px rgba(0,0,0,0.1)
+- Transitions: 0.2s ease
+=========================================================================================
 */
 
 :root {
-  --background: 0 0% 100%;
-  --foreground: 222.2 84% 4.9%;
+  /* NEWSROOM COLOR SYSTEM - EXACT VALUES FROM DESIGN REFERENCE */
+  --background: 0 0% 100%; /* #FFFFFF - pure white */
+  --foreground: 210 11% 15%; /* #212529 - dark text */
 
-  --card: 0 0% 100%;
-  --card-foreground: 222.2 84% 4.9%;
+  --card: 0 0% 100%; /* #FFFFFF - white cards */
+  --card-foreground: 210 11% 15%; /* #212529 - dark text on cards */
 
   --popover: 0 0% 100%;
-  --popover-foreground: 222.2 84% 4.9%;
+  --popover-foreground: 210 11% 15%;
 
-  --primary: 222.2 47.4% 11.2%;
-  --primary-foreground: 210 40% 98%;
+  /* PRIMARY BLUE - #007BFF - Main brand color for buttons, links, active states */
+  --primary: 211 100% 50%; /* #007BFF */
+  --primary-foreground: 0 0% 100%; /* white text on blue */
 
-  --secondary: 210 40% 96.1%;
-  --secondary-foreground: 222.2 47.4% 11.2%;
+  --secondary: 210 17% 98%; /* #F8F9FA - light gray background */
+  --secondary-foreground: 210 11% 15%;
 
-  --muted: 210 40% 96.1%;
-  --muted-foreground: 215.4 16.3% 46.9%;
+  --muted: 210 17% 98%; /* #F8F9FA */
+  --muted-foreground: 210 9% 46%; /* #6C757D - medium gray text */
 
-  --accent: 210 40% 96.1%;
-  --accent-foreground: 222.2 47.4% 11.2%;
+  --accent: 211 100% 50%; /* #007BFF - same as primary */
+  --accent-foreground: 0 0% 100%;
 
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 40% 98%;
+  --destructive: 354 70% 54%; /* #DC3545 - red for live indicators */
+  --destructive-foreground: 0 0% 100%;
 
-  --border: 214.3 31.8% 91.4%;
-  --input: 214.3 31.8% 91.4%;
-  --ring: 222.2 84% 4.9%;
+  --border: 0 0% 88%; /* #E0E0E0 - light gray borders */
+  --input: 0 0% 88%; /* #E0E0E0 */
+  --ring: 211 100% 50%; /* #007BFF - focus ring */
 
-  --radius: 0.5rem;
+  --radius: 0.5rem; /* 8px - default border radius */
+
+  /* NEWSROOM CUSTOM VARIABLES */
+  --news-blue: 211 100% 50%; /* #007BFF */
+  --news-red: 354 70% 54%; /* #DC3545 */
+  --news-gray-light: 210 17% 98%; /* #F8F9FA */
+  --news-gray-border: 0 0% 88%; /* #E0E0E0 */
+  --news-text-dark: 210 11% 15%; /* #212529 */
+  --news-text-medium: 210 9% 46%; /* #6C757D */
+
+  /* FONT SYSTEM */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* SPACING SYSTEM */
+  --spacing-xs: 0.25rem; /* 4px */
+  --spacing-sm: 0.5rem; /* 8px */
+  --spacing-md: 1rem; /* 16px */
+  --spacing-lg: 1.5rem; /* 24px */
+  --spacing-xl: 2rem; /* 32px */
+
+  /* SHADOW SYSTEM */
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.15);
 
   --sidebar-background: 0 0% 98%;
   --sidebar-foreground: 240 5.3% 26.1%;
@@ -153,11 +210,193 @@ All colors MUST be HSL.
   }
 }
 
+/* GLOBAL RESETS & BASE STYLES */
 * {
   border-color: hsl(var(--border));
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
+  font-family: var(--font-primary);
+  font-size: 0.875rem; /* 14px - body text size from design */
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+/* TYPOGRAPHY SCALE - EXACT FROM DESIGN REFERENCE */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0;
+  color: hsl(var(--news-text-dark));
+}
+
+h1 {
+  font-size: 2rem; /* 32px */
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.5rem; /* 24px */
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 1.125rem; /* 18px - logo size */
+  font-weight: 700;
+}
+
+h4 {
+  font-size: 1rem; /* 16px - article headlines */
+  font-weight: 700;
+}
+
+h5 {
+  font-size: 0.875rem; /* 14px */
+  font-weight: 600;
+}
+
+h6 {
+  font-size: 0.75rem; /* 12px - metadata size */
+  font-weight: 600;
+}
+
+p {
+  margin: 0 0 1rem 0;
+  line-height: 1.6;
+}
+
+a {
+  color: hsl(var(--news-blue));
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: hsl(211 100% 40%); /* slightly darker blue on hover */
+  text-decoration: underline;
+}
+
+/* BUTTON DEFAULTS - MATCHING DESIGN REFERENCE */
+button {
+  font-family: var(--font-primary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  outline: none;
+}
+
+/* FORM ELEMENT DEFAULTS */
+input, select, textarea {
+  font-family: var(--font-primary);
+  font-size: 0.875rem;
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: hsl(var(--news-blue));
+  box-shadow: 0 0 0 3px hsla(var(--news-blue) / 0.1);
+}
+
+/* UTILITY CLASSES FOR NEWSROOM DESIGN */
+.text-muted {
+  color: hsl(var(--news-text-medium));
+}
+
+.text-small {
+  font-size: 0.75rem; /* 12px - metadata */
+}
+
+.live-indicator {
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: hsl(var(--news-red));
+  border-radius: 50%;
+  display: inline-block;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* CONTAINER SYSTEM - MATCHING DESIGN REFERENCE */
+.container-newsroom {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* CARD COMPONENT STYLES - EXACT FROM DESIGN */
+.card-newsroom {
+  background: hsl(var(--card));
+  border-radius: 0.5rem; /* 8px */
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card-newsroom:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+/* SCROLLBAR UTILITIES */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* MOBILE RESPONSIVE UTILITIES */
+@media (max-width: 768px) {
+  .container-newsroom {
+    padding: 0 1rem;
+  }
+
+  h1 {
+    font-size: 1.75rem; /* 28px on mobile */
+  }
+
+  h2 {
+    font-size: 1.25rem; /* 20px on mobile */
+  }
+}
+
+/* ADDITIONAL UTILITY CLASSES */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }

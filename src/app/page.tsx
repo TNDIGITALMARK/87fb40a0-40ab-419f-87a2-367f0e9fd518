@@ -1,37 +1,49 @@
-export const dynamic = 'force-dynamic'
+'use client';
 
-export default function Index() {
+import { Header } from '@/components/newsroom/Header';
+import { NewsSourcesBar } from '@/components/newsroom/NewsSourcesBar';
+import { SearchBar } from '@/components/newsroom/SearchBar';
+import { CategoryFilter } from '@/components/newsroom/CategoryFilter';
+import { ArticleCard } from '@/components/newsroom/ArticleCard';
+import { TrendingTopics } from '@/components/newsroom/TrendingTopics';
+import { mockArticles, NewsCategory } from '@/lib/mock-data';
+import { useState } from 'react';
+
+export default function HomePage() {
+  const [selectedCategory, setSelectedCategory] = useState<NewsCategory | 'All'>('Politics');
+
+  const filteredArticles = selectedCategory === 'All'
+    ? mockArticles
+    : mockArticles.filter(article => article.category === selectedCategory);
+
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="text-center max-w-2xl px-4">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your App</h1>
-        <p className="text-xl mb-6 text-gray-600">
-          This template is configured to be absolutely lenient - builds never fail on validation errors.
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-left">
-          <div className="p-4 bg-green-50 rounded-lg border border-green-200">
-            <h3 className="font-semibold text-green-800 mb-2">✅ Always Builds</h3>
-            <ul className="text-green-700 space-y-1">
-              <li>• TypeScript errors ignored</li>
-              <li>• ESLint warnings ignored</li>
-              <li>• Global error boundaries</li>
-              <li>• Asset type safety</li>
-            </ul>
+    <div className="min-h-screen bg-secondary">
+      <Header />
+      <NewsSourcesBar />
+      <SearchBar />
+      <CategoryFilter
+        selectedCategory={selectedCategory}
+        onCategoryChange={setSelectedCategory}
+      />
+
+      {/* Main Content */}
+      <main className="container-newsroom py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Articles Grid */}
+          <div className="lg:col-span-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {filteredArticles.map((article) => (
+                <ArticleCard key={article.id} article={article} />
+              ))}
+            </div>
           </div>
-          <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-            <h3 className="font-semibold text-blue-800 mb-2">🚀 Production Ready</h3>
-            <ul className="text-blue-700 space-y-1">
-              <li>• Next.js 15.5.2 App Router</li>
-              <li>• Vercel optimized</li>
-              <li>• SSR/SEO friendly</li>
-              <li>• Browser API protection</li>
-            </ul>
+
+          {/* Sidebar */}
+          <div className="lg:col-span-1">
+            <TrendingTopics />
           </div>
         </div>
-        <p className="mt-6 text-gray-500">
-          Start building your amazing project here! This template will never fail builds due to validation errors.
-        </p>
-      </div>
+      </main>
     </div>
   );
 }
